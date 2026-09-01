@@ -1,11 +1,437 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>my personal website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joy Zeng</title>
+<meta name="description" content="Joy Zeng — Sr. Applied Scientist at Microsoft.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>">
+<style>
+:root{
+  --bg:#f2efe9; --fg:#1f1d1a; --muted:#6b6459; --line:#e0dbd1;
+  --accent:#8a5a2b; --chip-bg:#e9e5dc; --card:#f7f5f0;
+  --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:80px}
+body{margin:0; background:var(--bg); color:var(--fg); font-family:var(--sans);
+     font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- 顶部导航 ---------- */
+nav{position:sticky; top:0; z-index:10; background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--line)}
+nav .inner{max-width:1080px; margin:0 auto; padding:12px 32px; display:flex; flex-wrap:wrap;
+           gap:18px; align-items:center}
+nav .brand{font-weight:600; color:var(--fg); margin-right:auto}
+nav a{color:var(--muted); font-size:14.5px}
+nav a:hover{color:var(--accent); text-decoration:none}
+nav a.pill{background:#a9c5de; color:#1f2b36; padding:5px 16px; border-radius:999px;
+           font-weight:500; transition:background .15s}
+nav a.pill:hover{background:#93b5d4; color:#1f2b36}
+
+/* ---------- 两栏布局 ---------- */
+.layout{max-width:1080px; margin:0 auto; padding:52px 32px 72px;
+        display:flex; gap:56px; align-items:flex-start}
+.sidebar{flex:none; width:232px; position:sticky; top:82px}
+.content{flex:1; min-width:0}
+
+/* ---------- 左栏 ---------- */
+.avatar{width:190px; height:190px; border-radius:50%; object-fit:cover;
+        border:1px solid var(--line); background:var(--chip-bg); display:block}
+.sb-name{font-weight:600; font-size:18px; margin:20px 0 4px}
+.sb-role{color:var(--muted); font-size:15px; line-height:1.5; margin:0}
+.sb-links{margin-top:20px; display:flex; flex-direction:column; gap:11px}
+.sb-links .row{display:flex; align-items:center; gap:10px; font-size:15px; color:var(--fg)}
+.sb-links a.row:hover{color:var(--accent); text-decoration:none}
+.sb-links svg{flex:none; width:17px; height:17px; fill:var(--muted)}
+.sb-links a.row:hover svg{fill:var(--accent)}
+
+/* ---------- 右栏 ---------- */
+.content h1{font-family:var(--serif); font-size:36px; margin:0 0 14px; line-height:1.2}
+.content > section{padding-top:44px}
+h2{font-family:var(--serif); font-size:24px; margin:0 0 14px;
+   padding-bottom:8px; border-bottom:1px solid var(--line)}
+h3{font-size:16px; margin:26px 0 10px; color:var(--muted);
+   text-transform:uppercase; letter-spacing:.06em}
+.intro{margin:0}
+
+/* ---------- News ---------- */
+.news ul{list-style:none; margin:0; padding:0}
+.news li{display:flex; gap:16px; padding:8px 0; border-bottom:1px dashed var(--line)}
+.news li:last-child{border-bottom:none}
+.news .date{flex:none; width:66px; color:var(--muted); font-variant-numeric:tabular-nums; font-size:14.5px}
+
+/* ---------- Publications ---------- */
+.pub-list{margin-top:6px}
+.pub-item{display:flex; gap:11px; padding:15px 0; border-bottom:1px solid var(--line)}
+.pub-item:last-child{border-bottom:none}
+.pub-icon{flex:none; width:17px; height:17px; margin-top:5px; fill:var(--muted); opacity:.65}
+.pub-text{flex:1; line-height:1.68}
+.pub-text .me{font-weight:700}
+.pub-text em{color:var(--muted)}
+.pub-title{color:var(--accent)}
+.pub-btns{margin-top:9px}
+.pub-btns a{display:inline-block; margin-right:8px; padding:1px 10px; font-size:13px;
+            border:1px solid var(--accent); border-radius:5px; color:var(--accent)}
+.pub-btns a:hover{background:var(--accent); color:var(--bg); text-decoration:none}
+
+/* ---------- Service ---------- */
+.svc-row{display:flex; gap:20px; padding:7px 0}
+.svc-label{flex:none; width:148px; font-weight:600}
+.svc-val{color:var(--fg)}
+
+/* ---------- 时间轴（Experience） ---------- */
+.timeline{margin-top:4px}
+.tl-item{display:flex; gap:20px}
+.tl-period{flex:none; width:126px; text-align:right; padding-top:1px;
+           color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums; white-space:nowrap}
+.tl-body{flex:1; border-left:1px solid var(--line); padding:0 0 22px 24px; position:relative}
+.tl-body::before{content:""; position:absolute; left:-5px; top:6px; width:9px; height:9px;
+                 border-radius:50%; background:var(--bg); border:2px solid var(--line); box-sizing:border-box}
+.tl-item.current .tl-body::before{background:var(--accent); border-color:var(--accent)}
+.tl-item:last-child .tl-body{border-left-color:transparent; padding-bottom:0}
+.tl-role{font-weight:600; line-height:1.45}
+.tl-org{color:var(--muted); font-size:15px}
+
+footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid var(--line);
+       color:var(--muted); font-size:14px; text-align:center}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:860px){
+  .layout{flex-direction:column; gap:8px; padding:36px 24px 60px}
+  .sidebar{position:static; width:100%; text-align:center}
+  .avatar{width:150px; height:150px; margin:0 auto}
+  .sb-links{align-items:center; margin-bottom:8px}
+  .content h1{display:none}
+  .content > section{padding-top:38px}
+  nav .inner{padding:12px 24px}
+  footer{padding:24px}
+}
+@media (max-width:560px){
+  .tl-item{gap:12px}
+  .tl-period{width:76px; font-size:12.5px; white-space:normal; line-height:1.4}
+  .tl-body{padding-left:16px; padding-bottom:20px}
+  .news li{flex-direction:column; gap:0}
+  .news .date{width:auto}
+  .svc-row{flex-direction:column; gap:0}
+  .svc-label{width:auto}
+}
+</style>
 </head>
 <body>
-    <h1>Hello, GitHub Pages!</h1>
-    <p>Success!</p>
+
+<nav>
+  <div class="inner">
+    <a class="brand" href="#top">Joy Zeng</a>
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a class="pill" href="#publications">Publications</a>
+  </div>
+</nav>
+
+<div class="layout" id="top">
+
+  <!-- ========== 左栏：个人信息 ========== -->
+  <aside class="sidebar">
+    <img class="avatar" src="images/photo.jpg" alt="Joy Zeng">
+    <p class="sb-name">Joy Zeng</p>
+    <p class="sb-role">Sr. Applied Scientist,<br>Microsoft</p>
+    <div class="sb-links">
+      <span class="row">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        Mountain View, CA
+      </span>
+      <a class="row" href="https://www.linkedin.com/in/joyzengjy/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.64h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.69 22 11.1 22 14.24V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4V9z"/></svg>
+        LinkedIn
+      </a>
+      <a class="row" href="mailto:joyzengx@outlook.com">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v.4l-10 5.85L2 5.9v-.4zm0 2.72V18.5A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5V8.22l-9.5 5.56a1 1 0 0 1-1 0L2 8.22z"/></svg>
+        Email
+      </a>
+    </div>
+  </aside>
+
+  <!-- ========== 右栏：正文 ========== -->
+  <main class="content">
+
+    <h1 id="about">Joy Zeng</h1>
+    <p class="intro">
+      I am a Senior Applied Scientist at Microsoft, where my work focuses on post-training for
+      productivity agents, including defining target model behaviors, developing agentic RL and
+      on-policy distillation techniques to post-train models from frontier AI labs, optimizing
+      both response quality and agent inference efficiency, and building data flywheels that power
+      continuous improvement.
+    </p>
+
+    <!-- ========== News ========== -->
+    <section id="news">
+      <h2>News</h2>
+      <div class="news">
+        <ul>
+          <li>
+            <span class="date">2026.08</span>
+            <span>New paper: <a href="https://arxiv.org/abs/2606.05922" target="_blank" rel="noopener">Evolving Agents in the Dark</a> (RHO), improving LLM agents from unlabeled past trajectories via self-preference, is accepted at <strong>EMNLP 2026</strong>.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== Experience ========== -->
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <div class="tl-item current">
+          <div class="tl-period">2025.11 – Present</div>
+          <div class="tl-body">
+            <div class="tl-role">Senior Applied Scientist</div>
+            <div class="tl-org">Microsoft · Mountain View, CA</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2024.06 – 2025.10</div>
+          <div class="tl-body">
+            <div class="tl-role">Applied Scientist &mdash; <a href="https://www.aboutamazon.com/news/retail/amazon-rufus" target="_blank" rel="noopener">Rufus</a></div>
+            <div class="tl-org">Amazon · Palo Alto, CA</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2023.05 – 2024.06</div>
+          <div class="tl-body">
+            <div class="tl-role">Machine Learning Engineer &mdash; GenAI</div>
+            <div class="tl-org">Nextdoor · San Francisco, CA</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2022.05 – 2022.08</div>
+          <div class="tl-body">
+            <div class="tl-role">Machine Learning Intern</div>
+            <div class="tl-org">Twitter (Cortex) · San Francisco, CA</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2021.10 – 2022.04</div>
+          <div class="tl-body">
+            <div class="tl-role">Statistician / Research Scientist</div>
+            <div class="tl-org">Stanford University · Palo Alto, CA</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Selected Publications ========== -->
+    <section id="publications">
+      <h2>Selected Publications</h2>
+      <div class="pub-list">
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Wenbo Pan, Shujie Liu, Chin-Yew Lin, <span class="me">Jingying Zeng</span>, Xianfeng Tang, Xiangyang Zhou, Yan Lu, Xiaohua Jia (2026).
+            <span class="pub-title">Evolving Agents in the Dark: Retrospective Harness Optimization via Self-Preference</span>.
+            <em>accepted by EMNLP 2026</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2606.05922" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Pengfei He, Zhenwei Dai, Xianfeng Tang, Yue Xing, Hui Liu, <span class="me">Jingying Zeng</span>, Qiankun Peng, Shrivats Agrawal, Samarth Varshney, Suhang Wang, Jiliang Tang, Qi He (2026).
+            <span class="pub-title">To trust or not to trust: Attention-based Trust Management for LLM Multi-Agent Systems</span>.
+            <em>ACL 2026, long paper</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2506.02546" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Yingqian Cui, Zhenwei Dai, Pengfei He, Bing He, Hui Liu, Zhan Shi, Xianfeng Tang, <span class="me">Jingying Zeng</span>, Suhang Wang, Yue Xing, Jiliang Tang, Benoit Dumoulin (2026).
+            <span class="pub-title">A Reward-Guided Dual-Phase Framework for Adaptive Inference-Time Reasoning</span>.
+            <em>Findings of ACL 2026, long paper</em>.
+            <div class="pub-btns">
+              <a href="https://aclanthology.org/2026.findings-acl.511/" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Minhua Lin, Enyan Dai, Hui Liu, Xianfeng Tang, Yuliang Yan, Zhenwei Dai, <span class="me">Jingying Zeng</span>, Zhiwei Zhang, Fali Wang, Hongcheng Gao, Chen Luo, Xiang Zhang, Qi He, Suhang Wang (2026).
+            <span class="pub-title">How Far Are LLMs from Professional Poker Players? Revisiting Game-Theoretic Reasoning with Agentic Tool Use</span>.
+            <em>ICLR 2026</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2602.00528v1" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Zhiwei Zhang, Hui Liu, Xiaomin Li, Zhenwei Dai, <span class="me">Jingying Zeng</span>, Fali Wang, Minhua Lin, Ramraj Chandradevan, Zhen Li, Chen Luo, Xianfeng Tang, Qi He, Suhang Wang (2026).
+            <span class="pub-title">Bradley–Terry and Multi-Objective Reward Modeling Are Complementary</span>.
+            <em>ICLR 2026</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2507.07375" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Zhining Liu, Ziyi Chen, Hui Liu, Chen Luo, Xianfeng Tang, Suhang Wang, <span class="me">Joy Zeng</span>, Zhenwei Dai, Zhan Shi, Tianxin Wei, Benoit Dumoulin, Hanghang Tong (2026).
+            <span class="pub-title">Seeing but Not Believing: Probing the Disconnect Between Visual Attention and Answer Correctness in VLMs</span>.
+            <em>ICLR 2026</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2510.17771" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Minhua Lin, Hui Liu, Xianfeng Tang, <span class="me">Jingying Zeng</span>, Zhenwei Dai, Chen Luo, Zheng Li, Xiang Zhang, Qi He, Suhang Wang (2026).
+            <span class="pub-title">How Far Are LLMs from Real Search: Rethinking the Complementary Roles of Search and Learning</span>.
+            <em>ACM Transactions on Knowledge Discovery from Data (TKDD) 2026</em>.
+            <div class="pub-btns">
+              <a href="https://dl.acm.org/doi/10.1145/3834774" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            <span class="me">Jingying Zeng*</span>, Zhenwei Dai*, Hui Liu, Samarth Varshney, Zhiji Liu, Chen Luo, Zhen Li, Qi He, Xianfeng Tang (2025).
+            <span class="pub-title">Examples as the Prompt: A Scalable Approach for Efficient LLM Adaptation in E-Commerce</span>.
+            <em>SIGIR 2025 Industry Track</em>.
+            <div class="pub-btns">
+              <a href="https://dl.acm.org/doi/pdf/10.1145/3726302.3731941" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Yingqian Cui, Pengfei He, <span class="me">Jingying Zeng</span>, Hui Liu, Xianfeng Tang, Zhenwei Dai, Yan Han, Chen Luo, Jing Huang, Zhen Li, Suhang Wang, Yue Xing, Jiliang Tang, Qi He (2025).
+            <span class="pub-title">Stepwise Perplexity Guided Refinement for Efficient Chain-of-Thought Reasoning in Large Language Models</span>.
+            <em>Findings of ACL 2025, long paper</em>.
+            <div class="pub-btns">
+              <a href="https://aclanthology.org/2025.findings-acl.956/" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Jie Ren, Zhenwei Dai, Xianfeng Tang, Hui Liu, <span class="me">Jingying Zeng</span>, Zhen Li, Rahul Goutam, Suhang Wang, Yue Xing, Qi He (2025).
+            <span class="pub-title">A General Framework to Enhance Fine-tuning-based LLM Unlearning</span>.
+            <em>Findings of ACL 2025, long paper</em>.
+            <div class="pub-btns">
+              <a href="https://aclanthology.org/anthology-files/pdf/findings/2025.findings-acl.949.pdf" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Fali Wang, Hui Liu, Zhenwei Dai, <span class="me">Jingying Zeng</span>, Zhiwei Zhang, Zongyu Wu, Chen Luo, Zhen Li, Xianfeng Tang, Qi He, Suhang Wang (2025).
+            <span class="pub-title">AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks</span>.
+            <em>NeurIPS 2025</em>.
+            <div class="pub-btns">
+              <a href="https://neurips.cc/virtual/2025/loc/san-diego/poster/119334" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Jie Ren, Zhenwei Dai, Xianfeng Tang, Yue Xing, Shenglai Zeng, Hui Liu, <span class="me">Jingying Zeng</span>, Qiankun Peng, Samarth Varshney, Suhang Wang, Qi He, Charu C. Aggarwal, Hui Liu (2025).
+            <span class="pub-title">Keeping an Eye on LLM Unlearning: The Hidden Risk and Remedy</span>.
+            <em>NeurIPS 2025</em>.
+            <div class="pub-btns">
+              <a href="https://neurips.cc/virtual/2025/loc/san-diego/poster/118444" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Jinning Li, Ruipeng Han, <span class="me">Jingling Zeng</span>, Dachun Sun, Chenkai Sun, Hanghang Tong, Chengxiang Zhai, Boleslaw K. Szymanski, Tarek Abdelzaher (2025).
+            <span class="pub-title">Learning to Slice: Self-Supervised Interpretable Hierarchical Representation Learning with Graph Auto-Encoder Tree</span>.
+            <em>KDD 2025, Research Track</em>.
+            <div class="pub-btns">
+              <a href="https://dl.acm.org/doi/10.1145/3711896.3737023" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Jinning Li, Ruipeng Han, Chenkai Sun, Dachun Sun, Ruijie Wang, <span class="me">Jingying Zeng</span>, Yuchen Yan, Hanghang Tong, Tarek Abdelzaher (2024).
+            <span class="pub-title">Large Language Model Guided Disentangled Belief Representation Learning on Polarized Social Graphs</span>.
+            <em>International Conference on Computer Communications and Networks (ICCCN) 2024</em>.
+            <div class="pub-btns">
+              <a href="https://ieeexplore.ieee.org/document/10637650" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            Gabriel F. T. Variane, Alex Dahlen, Caroline Y. Noh, <span class="me">Jingying Zeng</span>, Elisabeth S. Yan, Julianna S. Kaneko, Marcella S. Gouveia, Krisa P. Van Meurs, Valerie Y. Chock (2023).
+            <span class="pub-title">Cerebral Oxygen Saturation in Neonates: a Bedside Comparison between Neonatal and Adult NIRS Sensors</span>.
+            <em>Pediatric Research 2023</em>.
+            <div class="pub-btns">
+              <a href="https://www.nature.com/articles/s41390-023-02705-z" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Preprint</h3>
+      <div class="pub-list">
+        <div class="pub-item">
+          <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5zM8 12h8v1.6H8V12zm0 3.4h8V17H8v-1.6zM8 8.6h3.5v1.6H8V8.6z"/></svg>
+          <div class="pub-text">
+            <span class="me">Jingying Zeng</span>, Hui Liu, Zhenwei Dai, Xianfeng Tang, Chen Luo, Samarth Varshney, Zhen Li, Qi He (2025).
+            <span class="pub-title">Cite Before You Speak: Enhancing Context-Response Grounding in E-Commerce Conversational LLM-Agents</span>.
+            <em>arXiv:2503.04830</em>.
+            <div class="pub-btns">
+              <a href="https://arxiv.org/pdf/2503.04830" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Service ========== -->
+    <section id="service">
+      <h2>Service</h2>
+      <div class="svc-row">
+        <div class="svc-label">Reviewer</div>
+        <div class="svc-val">EMNLP, NeurIPS</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-label">Area Chair</div>
+        <div class="svc-val">KDD 2026–2027</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-label">Organizing Role</div>
+        <div class="svc-val">KDD 2027 Local Chair</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  © 2025 Joy Zeng
+</footer>
+
 </body>
 </html>
