@@ -87,8 +87,9 @@ h3{font-size:16px; margin:26px 0 10px; color:var(--muted);
 
 /* ---------- News ---------- */
 .news ul{list-style:none; margin:0; padding:0}
-.news li{display:flex; gap:16px; padding:8px 0; border-bottom:1px dashed var(--line)}
+.news li{display:flex; gap:14px; padding:8px 0; border-bottom:1px dashed var(--line)}
 .news li:last-child{border-bottom:none}
+.news .emoji{flex:none; width:22px; text-align:center; line-height:1.7}
 .news .date{flex:none; width:66px; color:var(--muted); font-variant-numeric:tabular-nums; font-size:14.5px}
 
 /* ---------- Publications ---------- */
@@ -145,8 +146,9 @@ footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid 
   .tl-item{gap:12px}
   .tl-period{width:76px; font-size:12.5px; white-space:normal; line-height:1.4}
   .tl-body{padding-left:16px; padding-bottom:20px}
-  .news li{flex-direction:column; gap:0}
+  .news li{flex-wrap:wrap; gap:0 10px}
   .news .date{width:auto}
+  .news .text{flex-basis:100%}
   .svc-row{flex-direction:column; gap:0}
   .svc-label{width:auto}
 }
@@ -204,8 +206,9 @@ footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid 
       <div class="news">
         <ul>
           <li>
+            <span class="emoji" aria-hidden="true">🎉</span>
             <span class="date">2026.08</span>
-            <span>New paper: <a href="https://arxiv.org/abs/2606.05922" target="_blank" rel="noopener">Evolving Agents in the Dark</a> (RHO), improving LLM agents from unlabeled past trajectories via self-preference, is accepted at <strong>EMNLP 2026</strong>.</span>
+            <span class="text">New paper: <a href="https://arxiv.org/abs/2606.05922" target="_blank" rel="noopener">Evolving Agents in the Dark</a> (RHO), improving LLM agents from unlabeled past trajectories via self-preference, is accepted at <strong>EMNLP 2026</strong>.</span>
           </li>
         </ul>
       </div>
