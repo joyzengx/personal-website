@@ -89,7 +89,8 @@ h3{font-size:16px; margin:26px 0 10px; color:var(--muted);
 .news ul{list-style:none; margin:0; padding:0}
 .news li{display:flex; gap:14px; padding:8px 0; border-bottom:1px dashed var(--line)}
 .news li:last-child{border-bottom:none}
-.news .emoji{flex:none; width:22px; text-align:center; line-height:1.7}
+.news .icon{flex:none; width:38px; text-align:center}
+.news .icon img{width:36px; height:36px; object-fit:contain; display:block; margin:-4px auto 0}
 .news .date{flex:none; width:66px; color:var(--muted); font-variant-numeric:tabular-nums; font-size:14.5px}
 
 /* ---------- Publications ---------- */
@@ -127,6 +128,7 @@ h3{font-size:16px; margin:26px 0 10px; color:var(--muted);
 /* ---------- Miscellaneous ---------- */
 .misc{margin:0; padding-left:20px}
 .misc li{padding:4px 0}
+.misc img{height:1.35em; width:auto; vertical-align:-0.3em; margin:0 2px}
 
 footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid var(--line);
        color:var(--muted); font-size:14px; text-align:center}
@@ -206,7 +208,7 @@ footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid 
       <div class="news">
         <ul>
           <li>
-            <span class="emoji" aria-hidden="true">🎉</span>
+            <span class="icon"><img src="images/accepted.png" alt=""></span>
             <span class="date">2026.08</span>
             <span class="text">New paper: <a href="https://arxiv.org/abs/2606.05922" target="_blank" rel="noopener">Evolving Agents in the Dark</a> (RHO), improving LLM agents from unlabeled past trajectories via self-preference, is accepted at <strong>EMNLP 2026</strong>.</span>
           </li>
@@ -475,7 +477,7 @@ footer{max-width:1080px; margin:0 auto; padding:24px 32px; border-top:1px solid 
     <section id="misc">
       <h2>Miscellaneous</h2>
       <ul class="misc">
-        <li>I enjoy traveling and photography.</li>
+        <li>I enjoy traveling <img src="images/travel.png" alt=""> and photography <img src="images/camera.png" alt="">.</li>
         <li>I built a <a href="https://apps.apple.com/us/app/lumoryai/id6752211828" target="_blank" rel="noopener">Photo Copilot App</a> for fun.</li>
       </ul>
     </section>
